@@ -9,10 +9,6 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation} from
      .bi {
        color: green;
      } 
-
-     .bi-star {
-       background: black;
-     }
     `
   ],
   encapsulation: ViewEncapsulation.Emulated,

@@ -5,3 +5,13 @@
         [class.bi-star-fill]="!isFavorite"
     ></i>
 </div>
+<hr/>
+<h4>Example of ngClass</h4>
+<div (click)="onClicked()">
+    <i class="bi" 
+        [ngClass]="{
+            'bi-star': isFavorite,
+            'bi-star-fill': !isFavorite
+        }"
+    ></i>
+</div>

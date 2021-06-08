@@ -4,8 +4,70 @@
 <favorite [is-favorite]="post.isFavorite" (change)="onFavoriteChange($event)"></favorite>
 <hr/>
 <app-panel>
+    <ng-container class="heading">Heading ngContainer</ng-container>
     <div class="heading">Heading</div>
     <div class="body">
         <h2>Body</h2>
     </div>
 </app-panel>
+<hr/>
+<h1>Section 6</h1>
+<div *ngIf="courses.length > 0; then coursesList else noCourses"></div>
+<ng-template #coursesList>List of courses</ng-template>
+<ng-template #noCourses>No courses yet</ng-template>
+<hr/>
+<h4>Another way to show/hide page</h4>
+<div [hidden]="courses.length == 0">List of courses</div>
+<div [hidden]="courses.length > 0">No courses yet</div>
+<h4>ngSwitchCase</h4>
+<ul class="nav nav-pills">
+    <li class="nav-item">
+        <a  [class.active]="viewMode == 'map'" (click)="viewMode = 'map'" class="nav-link">Map View</a>
+    </li>
+    <li class="nav-item">
+        <a [class.active]="viewMode == 'list'"class="nav-link" (click)="viewMode = 'list'">List View</a>
+    </li>
+</ul>
+<div [ngSwitch]="viewMode">
+    <div *ngSwitchCase="'map'">Map View Content</div>
+    <div *ngSwitchCase="'list'">List View Content</div>
+    <div *ngSwitchDefault>Otherwise</div>
+</div>
+<hr/>
+<h4>ngFor</h4>
+<button (click)="onAdd()">Add</button>
+<ul>
+    <li *ngFor="let course of courses; index as i; even as isEven">
+        {{i}} - {{ course.name }} <span *ngIf="isEven">(EVEN)</span>
+        <button (click)="onRemove(course)">Remove</button>
+        <button (click)="onChange(course)">Change</button>
+    </li>
+</ul>
+<hr/>
+<button (click)="loadClasses()">Load Courses</button>
+<ul>
+    <li *ngFor="let class of classes; index as i; trackBy: trackClass">
+        {{ class.name }}
+    </li>
+</ul>
+<hr/>
+<h4>Example of ngStyle</h4>
+<button
+    [style.backgroundColor]="canSave ? 'blue': 'gray'"
+    [style.color]="canSave ? 'white':'black'"
+    [style.fontWeight]="canSave ? 'bold':'normal'"
+
+    [ngStyle]="{
+        'backgroundColor': canSave ? 'blue': 'gray',
+        'color': canSave ? 'white':'black',
+        'fontWeight': canSave ? 'bold':'normal'
+    }"
+>
+Save
+</button>
+<hr/>
+<h4>Example of Safe Traversal Operator</h4>
+<span *ngIf="task.assignee">{{task.assignee?.name}}</span>
+<hr/>
+<h4>Example of Custom Directives</h4>
+<input type="text" [appInputFormat]="'uppercase'">
