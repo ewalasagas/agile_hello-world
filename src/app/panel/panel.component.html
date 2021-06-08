@@ -1,0 +1,12 @@
+<p>panel works!</p>
+<div class="card">
+    <div class="card-header">
+        Heading
+        <ng-content select=".heading"></ng-content>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <ng-content select=".body"></ng-content>
+        </li>
+    </ul>
+</div>
