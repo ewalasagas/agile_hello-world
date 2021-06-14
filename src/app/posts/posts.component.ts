@@ -23,17 +23,20 @@ export class PostsComponent implements OnInit {
 
   createPost(input: HTMLInputElement) {
     let post: any = {title: input.value};
+    //SPLICE VS PUSH - splice adds at specified point, push is at end
+    //splice(beg, how many want to remove, what and where do u wnat to add post[0])
+    this.posts.splice(0, 0, post);  //places it immediatley - better performance
     input.value = '';
 
     this.service.create(post)
       .subscribe(newPost => {
         post.id = newPost;
-        //SPLICE VS PUSH - splice adds at specified point, push is at end
-        //splice(beg, how many want to remove, what and where do u wnat to add post[0])
-        this.posts.splice(0, 0, post);
+    
         console.log(newPost);
       }, (error: AppError) => {
+        this.posts.splice(0, 1);
         if(error instanceof BadInput)
+
           // IF YOU HAD A FORM -- this.form.setErrors(error.originalError)
           alert('This post has already been deleted.')
         else throw error;
@@ -51,11 +54,13 @@ export class PostsComponent implements OnInit {
   }
 
   deletePost(post: any) {
+    let index = this.posts.indexOf(post);
+    this.posts.splice(index, 1);
+
     this.service.delete(post)
-      .subscribe(() => {
-        let index = this.posts.indexOf(post);
-        this.posts.splice(index, 1);
-      }, (error: AppError) => {
+      .subscribe(null,
+      (error: AppError) => {
+        this.posts.splice(index, 0, post);
         if(error instanceof NotFoundError)
           alert('This post has already been deleted.')
         else throw error;
