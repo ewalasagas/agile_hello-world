@@ -16,26 +16,29 @@ export class DataService {
 
   getAll() {
     return this.http.get(this.url).pipe(
-        map((response: any) => response.json()),
+        map(response => response),
         catchError(this.handleError)
     );
   }
 
   create(resource: any) {
     return this.http.post(this.url, JSON.stringify(resource)).pipe(
-      catchError(this.handleError)
+        map(response => response),
+        catchError(this.handleError)
     );
   }
 
   update(resource: any) {
     return this.http.patch(this.url + '/' + resource.id, JSON.stringify({ isRead: true})).pipe(
-      catchError(this.handleError)
+        map(response => response),
+        catchError(this.handleError)
     );
   }
 
   delete(id: any) {
     return this.http.delete(this.url + '/' + id).pipe(
-      catchError(this.handleError)
+        map(response => response),
+        catchError(this.handleError)
     );
   }
 

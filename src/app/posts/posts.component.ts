@@ -18,8 +18,7 @@ export class PostsComponent implements OnInit {
    //lifecycle hook - dont necessarily needs implements onInit - but uses it for compile-time checking
    ngOnInit() {
      this.service.getAll()  //moved to services/post.service -- for encapsulation
-    .subscribe(posts =>
-      this.posts = posts);
+    .subscribe(posts => this.posts = posts);
   }
 
   createPost(input: HTMLInputElement) {
@@ -27,12 +26,12 @@ export class PostsComponent implements OnInit {
     input.value = '';
 
     this.service.create(post)
-      .subscribe(response => {
-        post.id = response;
+      .subscribe(newPost => {
+        post.id = newPost;
         //SPLICE VS PUSH - splice adds at specified point, push is at end
         //splice(beg, how many want to remove, what and where do u wnat to add post[0])
         this.posts.splice(0, 0, post);
-        console.log(response);
+        console.log(newPost);
       }, (error: AppError) => {
         if(error instanceof BadInput)
           // IF YOU HAD A FORM -- this.form.setErrors(error.originalError)
@@ -45,15 +44,15 @@ export class PostsComponent implements OnInit {
     //patch is to update only few properties in object
     // REMOVED -- this.http.patch(this.url + '/' + post.id, JSON.stringify({ isRead: true}))
     this.service.update(post)
-      .subscribe(response => {
-        console.log(response);
+      .subscribe(updatedPost => {
+        console.log(updatedPost);
       });
     //PUT METHOD: send whole thing -- this.http.put(this.url, JSON.stringify(post)) 
   }
 
   deletePost(post: any) {
     this.service.delete(post)
-      .subscribe(response => {
+      .subscribe(() => {
         let index = this.posts.indexOf(post);
         this.posts.splice(index, 1);
       }, (error: AppError) => {
