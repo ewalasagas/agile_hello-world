@@ -5,8 +5,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="#">Followers</a>
-        <a class="nav-item nav-link" href="#">Posts</a>
+        <a class="nav-item nav-link" 
+          routerLinkActive="active current" 
+          routerLink="/followers" 
+          [queryParams]="{page: 1, order: 'newest'}">Followers</a>
+        <a class="nav-item nav-link" routerLinkActive="active current" routerLink="/posts">Posts</a>
       </div>
     </div>
   </nav>
